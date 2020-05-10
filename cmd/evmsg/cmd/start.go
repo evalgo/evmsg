@@ -24,7 +24,6 @@ import (
 	"os"
 	"time"
 
-	"evalgo.org/eve"
 	"evalgo.org/evmsg"
 
 	echo "github.com/labstack/echo/v4"
@@ -35,6 +34,10 @@ import (
 	"golang.org/x/net/websocket"
 
 	"github.com/spf13/cobra"
+)
+
+var (
+	VERSION = "v0.0.1"
 )
 
 // startCmd represents the start command
@@ -54,7 +57,7 @@ var startCmd = &cobra.Command{
 		e.Use(middleware.Logger())
 		e.Use(middleware.Recover())
 		e.Static("/", "webroot")
-		e.POST("/"+eve.Version+"/upload", func(c echo.Context) error {
+		e.POST("/"+VERSION+"/upload", func(c echo.Context) error {
 			if evmsg.Bearer(c) == nil {
 				file, handler, err := c.Request().FormFile("file")
 				if err != nil {
@@ -88,7 +91,7 @@ var startCmd = &cobra.Command{
 			c.Response().Write([]byte("401 Unauthorized"))
 			return errors.New("401 Unauthorized")
 		})
-		e.GET("/"+eve.Version+"/ws", func(c echo.Context) error {
+		e.GET("/"+VERSION+"/ws", func(c echo.Context) error {
 			s := websocket.Server{
 				Handler: websocket.Handler(func(ws *websocket.Conn) {
 					defer ws.Close()

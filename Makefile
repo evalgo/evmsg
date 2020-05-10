@@ -7,9 +7,6 @@ test:
 	go get -v
 	go test -v -run=Test_Unit 2>&1 | ./go-junit-report > report.xml
 
-update:
-	GOPRIVATE="evalgo.org/eve,evalgo.org/evapp,evalgo.org/plugins" go get -u -v
-
 build:
 	GOOS=linux GOARCH=amd64 go build -o evmsg.linux.amd64 cmd/evmsg/main.go
 	GOOS=darwin GOARCH=amd64 go build -o evmsg.darwin.amd64 cmd/evmsg/main.go
